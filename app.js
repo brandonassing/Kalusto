@@ -18,6 +18,10 @@ var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://main:main@ds125556.mlab.com:25556/kalusto');
 
+var Symbol = require('./symbol.js');
+
+var db_router = express.Router();
+app.use('/api', db_router);
 app.use(express.static(__dirname + '/public'));
 
 app.use(function(req,res,next) {
@@ -36,6 +40,43 @@ app.get('/', function(req, res) {
 app.get('/app', function(req, res) {
 	res.render('app.ejs');
 });
+
+//////////////////////////SYMBOL DB CALLS////////////////////////////////////////////////
+
+db_router.route('/symbols')
+
+// create a tweet (accessed at POST http://localhost:8080/api/tweets)
+.post(function(req, res) {
+
+    var sym = new Symbol(); 
+    console.log("post");
+    // window.alert("hit");
+    sym.content = req.body.content; 
+    sym.key = req.body.key;
+
+    sym.save(function(err) {
+        if (err)
+            return res.send(err);
+
+        res.json({
+            message: 'Symbol stored'
+        });
+
+
+    });
+})
+
+.get(function(req, res) {
+    console.log("gotten");
+    Symbol.find({}, function(err, sym) {
+        if (err)
+            return res.send(err);
+        res.json(sym);
+    });
+
+});
+
+//////////////////////////SYMBOL DB CALLS////////////////////////////////////////////////
 
 var appEnv = cfenv.getAppEnv();
 // console.log(appEnv);
