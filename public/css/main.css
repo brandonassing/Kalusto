@@ -14,10 +14,33 @@
 	margin: auto;
 	margin-top: 5vh;
 }
-
+.stockDisplay {
+	margin-bottom: 5px;
+	margin-top: 10px;
+}
+#companyName {
+	float: left;
+	margin-left: 25px;
+	margin-right: 40px;
+}
+#latestPrice {
+	text-align: start !important;
+	font-size: 20px;
+	font-weight: 700;
+}
+#priceChange {
+	font-size: 15px;
+	margin-right: 1px;
+}
 #stockChart {
-	width: 100%;
-	height: 100%;
+	width: 98% !important;
+	height: 85% !important;
+}
+.tealColor {
+	color: #c0f5e8;
+}
+.redColor {
+	color: #e62325;
 }
 /* For "liked" stock list */
 .DocumentList
