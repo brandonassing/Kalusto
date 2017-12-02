@@ -22,7 +22,7 @@ $(document).ready(function() {
             		var symbol = JSON.stringify(stockData.symbol).replace(/['"]+/g, '');
 					$('#'+ symbol + '-liked').append('<div class="list-symbol-info"><i class="list-symbol-name">' + name + '</i></br><b>$' + price + '</b><p id="' + symbol + '-change"></p></div>');
 					if (priceChange > 0) {
-						$("#" + symbol + "-change").addClass('tealColor').html('($' + priceChange + ' / ' + percentChange + '%)');
+						$("#" + symbol + "-change").addClass('greenColor').html('($' + priceChange + ' / ' + percentChange + '%)');
 					} else if (priceChange < 0) {
 						$("#" + symbol + "-change").addClass('redColor').html('(-$' + priceChange.slice(1) + ' / ' + percentChange + '%)');;
 					}
