@@ -2,7 +2,7 @@ var $box = $("#placeholder-box");
 var $box_left = $box.offset().left, $box_top = $box.offset().top;
 var timer1;
 var labelX = [], labelY = [];
-const company = 'AAPL';
+const company = 'AMZN';
 
 $(document).ready(function() {
 	function refreshList(){
@@ -59,9 +59,9 @@ $(document).ready(function() {
 					$("#latestPrice").html('$' +res.latestPrice);
 					$("#priceChange").html('('+res.change.toString().slice(0,1) + '$' + res.change.toString().slice(1));
 
-					var changePercent = (Math.abs(res.changePercent.toFixed(2)) == 0) ? 
-															res.changePercent :  
-															res.changePercent.toFixed(2);
+					var changePercent = (Math.abs((res.changePercent * 100).toFixed(2)) == 0) ? 
+															res.changePercent * 100 :  
+															(res.changePercent * 100).toFixed(2);
 
 					$("#priceChange").append(' / ' + changePercent + '%)');
 					if (res.change > 0) {
