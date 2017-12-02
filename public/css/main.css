@@ -1,3 +1,19 @@
+/* * * * * * * * * * * * * */
+/* main.ejs */
+#placeholder-box {
+	border: 3px solid green;
+	height: 100px;
+	width: 50%;
+	margin: auto;
+	margin-top: 10%;
+}
+
+
+
+
+
+/* * * * * * * * * * * * * */
+
 .jumbotron {
 		background-color: #fdd600;
 		padding-top: 128px;
@@ -182,213 +198,6 @@ button {
 		border-top-width: 2px;
 }
 
-.center-block {
-		margin: 0 auto;
-		margin-bottom: 100px;
-}
-
-input[type="text"] {
-		font-family: Arial, sans-serif;
-		font-size: 30px;
-		border-left-color: rgb(255, 255, 255);
-		border-left-style: solid;
-		border-left-width: 2px;
-		border-right-color: rgb(255, 255, 255);
-		border-right-style: solid;
-		border-right-width: 2px;
-		border-top-color: rgb(255, 255, 255);
-		border-top-style: solid;
-		border-top-width: 2px;
-		box-sizing: border-box;
-		color: black;
-		cursor: pointer;
-		direction: ltr;
-		display: inline-block;
-		font-family: 'Open Sans', sans-serif;
-		font-size: 16px;
-		height: 46px;
-		line-height: 20px;
-		margin-bottom: 20px;
-		margin-left: 0px;
-		margin-right: 20px;
-		margin-top: 0px;
-		min-height: 20px;
-		min-width: 120px;
-		padding-bottom: 11px;
-		padding-left: 18px;
-		padding-right: 18px;
-		padding-top: 11px;
-		text-align: left;
-		text-decoration: none;
-		transition-delay: 0s, 0s, 0s;
-		transition-duration: 0.3s, 0.3s, 0.3s;
-		transition-property: border, color, background-color;
-		transition-timing-function: ease, ease, ease;
-		vertical-align: baseline;
-		white-space: normal;
-}
-
-input[type="text"] {
-		border-left-color: #fdd600;
-		border-right-color: #fdd600;
-		border-top-color: #fdd600;
-		border-bottom-color: #fdd600;
-}
-
-.orange-text {
-		color: #fdd600;
-}
-
-.container {
-		padding: 0px;
-}
-
-.col-md-6 {
-		padding-left: 0px;
-}
-
-.fa-chevron-right {
-		padding-left: 10px;
-}
-
-.tag {
-		font-size: 1rem;
-		text-align: center;
-		margin-top: 50px;
-}
-
-.prettyprint {
-		background-color: white;
-		color: black;
-		border: none;
-}
-
-.block {
-		float: left;
-		margin: 15px;
-}
-
-.blockText {
-		width: 50px;
-		height: 50px;
-		color: white;
-		display: table-cell;
-		text-align: center;
-		vertical-align: middle;
-		background-color: #202020;
-}
-
-.mainDisplayDiv {
-		height: 250px;
-}
-
-.leftDiv {
-		text-align: right;
-		font-size: 70px;
-}
-
-.rightDiv {
-		text-align: left;
-		font-size: 70px;
-}
-
-.centerDiv {
-		display: inline-block;
-}
-
-.scrollable {
-		overflow-y: scroll;
-}
-
-#response-main {
-		border-radius: 0;
-		height: 100px;
-		max-width: 500px;
-}
-
-#dashButton-wrapper {
-		bottom: 60px;
-		left: 100%;
-		position: fixed;
-}
-
-#dashButton {
-		background-color: red;
-		position: absolute;
-		right: 10px;
-		color: white;
-		white-space: nowrap;
-}
-
-#dashboard-wrapper {
-		position: fixed;
-		background-color: blue;
-}
-
-#dashboard {
-		position: fixed;
-		bottom: 0%;
-		width: 100%;
-		background-color: #393838;
-		color: black;
-}
-
-#blockChain {
-		display: inline-block;
-}
-
-.light-text {
-		color: #fdd600
-}
-
-.select-style {
-		border: 1px solid #ccc;
-		width: 120px;
-		border-radius: 3px;
-		overflow: hidden;
-		background: #fafafa url("http://i62.tinypic.com/15xvbd5.png") no-repeat 95% 50%;
-}
-
-.select-style select {
-		padding: 5px 8px;
-		width: 130%;
-		border: none;
-		box-shadow: none;
-		background: transparent;
-		background-image: none;
-		-webkit-appearance: none;
-}
-
-.select-style select:focus {
-		outline: none;
-}
-
-.mainContainer {
-		margin-left: 30px;
-		margin-right: 30px;
-}
-
-.dashToggle {
-		padding-top: 10px;
-		color: #fdd600;
-}
-
-.hideDashboard {
-		height: 60px;
-}
-
-.showDashboard {
-		height: 300px;
-}
-
-/* * * * * * * * * * * * * */
-/* app.ejs */
-#viewDiv {
-	padding: 0;
-	margin: 50px 0;
-	height: 500px;
-	width: 100%;
-}
 /* * * * * * * * * * * * * */
 
 .dropbtn {
