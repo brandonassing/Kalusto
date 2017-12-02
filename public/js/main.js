@@ -3,7 +3,7 @@ var $box_left = $box.offset().left, $box_top = $box.offset().top;
 var timer1;
 var labelX = [], labelY = [];
 
-const company = 'AMZN';
+const company = 'NTNX';
 
 
 $(document).ready(function() {
@@ -40,7 +40,7 @@ $(document).ready(function() {
 	});
 
 	$("#refresh").click(function(){
-          refreshList();
+					refreshList();
 	});
 	Chart.defaults.global.responsive = true;
 	Chart.defaults.global.legend.display = false;
@@ -68,7 +68,14 @@ $(document).ready(function() {
 				success: function(res) {
 					$("#companyName").html(res.companyName+ ' ('+ res.symbol+ ')');
 					$("#latestPrice").html('$' +res.latestPrice);
-					$("#priceChange").html('('+res.change.toString().slice(0,1) + '$' + res.change.toString().slice(1));
+					var plusOrMinus = (res.change.toString().slice(0,1) === '-') ? '-' : '+';
+					
+					if (plusOrMinus === "+") {
+						$("#priceChange").html('($' +res.change.toString());
+					} else {
+						$("#priceChange").html('('+res.change.toString().slice(0,1) + '$' + res.change.toString().slice(1));	
+					}
+					
 
 					var changePercent = (Math.abs((res.changePercent * 100).toFixed(2)) == 0) ? 
 															res.changePercent * 100 :  
@@ -76,9 +83,11 @@ $(document).ready(function() {
 
 					$("#priceChange").append(' / ' + changePercent + '%)');
 					if (res.change > 0) {
-						$("#priceChange").addClass('tealColor');
-					} else {
+						$("#priceChange").addClass('greenColor');
+					} else if (res.change < 0) {
 						$("#priceChange").addClass('redColor');
+					} else {
+						
 					}
 					$("#today").html('Today');
 				}
