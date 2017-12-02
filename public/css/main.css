@@ -3,6 +3,13 @@
 .navbar {
 	margin-bottom: 0;
 }
+#logo {
+	display: inline-block;
+	height: 30px;
+}
+#Kalusto {
+	color: #9320a2;
+}
 #first-section {
 	/*height: 50vh;*/
 }
