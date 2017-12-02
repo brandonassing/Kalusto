@@ -2,7 +2,9 @@ var $box = $("#placeholder-box");
 var $box_left = $box.offset().left, $box_top = $box.offset().top;
 var timer1;
 var labelX = [], labelY = [];
+
 const company = 'AMZN';
+
 
 $(document).ready(function() {
 	function refreshList(){
@@ -13,11 +15,20 @@ $(document).ready(function() {
             	$("#liked-list").append('<li id="' + symbol + '-liked" class="DocumentItem"><h3>' + symbol + '</h3></li>');
             	var url = "https://api.iextrading.com/1.0/stock/" + symbol + "/quote";
             	$.get(url, function(stockData){
-            		var name = JSON.stringify(stockData.companyName).replace(/['"]+/g, '');
+            		//var name = JSON.stringify(stockData.companyName).replace(/['"]+/g, '');
             		var price = JSON.stringify(stockData.latestPrice).replace(/['"]+/g, '');
-            		var volume = JSON.stringify(stockData.latestVolume).replace(/['"]+/g, '');
+            		var priceChange = JSON.stringify(stockData.change).replace(/['"]+/g, '');
+            		var percentChange = JSON.stringify(stockData.changePercent).replace(/['"]+/g, '') * 100;
             		var symbol = JSON.stringify(stockData.symbol).replace(/['"]+/g, '');
-					$('#'+ symbol + '-liked').append('<p>' + name + '</p><h4>Latest Price: ' + price + '</h4><h4>Latest Volume: ' + volume + '</h4>');
+					$('#'+ symbol + '-liked').append('<b>$' + price + '</b><p id="' + symbol + '-change"></p>');
+					if (priceChange > 0) {
+						$("#" + symbol + "-change").addClass('tealColor').html('($' + priceChange + ' / ' + percentChange + '%)');
+					} else if (priceChange < 0) {
+						$("#" + symbol + "-change").addClass('redColor').html('(-$' + priceChange.slice(1) + ' / ' + percentChange + '%)');;
+					}
+					else{
+						$("#" + symbol + "-change").html('($' + priceChange + ' / ' + percentChange + '%)');;	
+					}
 	            });
             }
         });
