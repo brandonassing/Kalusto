@@ -464,3 +464,35 @@ a {
 		background-color: #fdd600;
 		color: #323232;
 }
+
+
+
+
+
+
+
+
+
+/* For "liked" stock list */
+.DocumentList
+{
+	background-color: #562F72;
+    overflow-x:scroll;
+    overflow-y:hidden;
+    height:200px;
+    padding: 15px;
+    min-width: 100vw;
+}
+
+.DocumentItem
+{
+	background-color: white;
+    padding:10px;
+    height:150px;
+    margin:10px;
+    width:250px;
+}
+
+.list-inline {
+  white-space:nowrap;
+}
