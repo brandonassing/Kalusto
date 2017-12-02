@@ -37,9 +37,15 @@
 	</nav>
 	<div class="container-fluid" id='first-section'>
 		<div class="row">
-			<div class="col-md-12 text-center">
+			<div class="col-md-12">
 				<div id='placeholder-box'>
-
+					<div class='stockDisplay'>
+						<span id='companyName'></span>
+						<span id='latestPrice'></span>
+						<span id='priceChange'></span>
+						<span id='today'></span>
+					</div>
+					<canvas id='stockChart'></canvas>
 				</div>
 			</div>
 		</div>
@@ -66,6 +72,7 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js " integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=" anonymous "></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js'></script>
 	<script type="text/javascript " src="js/main.js "></script>
 	
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
