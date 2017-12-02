@@ -3,35 +3,35 @@ var $box_left = $box.offset().left, $box_top = $box.offset().top;
 var timer1;
 var labelX = [], labelY = [];
 
-const company = 'AMZN';
+const company = 'NTNX';
 
 
 $(document).ready(function() {
 	function refreshList(){
 		$.get("/api/symbols", function(data){
-          	var symbol;
-            for(var i in data){
-            	symbol = JSON.stringify(data[i].symbol).replace(/['"]+/g, '').toUpperCase();
-            	$("#liked-list").append('<li id="' + symbol + '-liked" class="DocumentItem"><h3>' + symbol + '</h3></li>');
-            	var url = "https://api.iextrading.com/1.0/stock/" + symbol + "/quote";
-            	$.get(url, function(stockData){
-            		//var name = JSON.stringify(stockData.companyName).replace(/['"]+/g, '');
-            		var price = JSON.stringify(stockData.latestPrice).replace(/['"]+/g, '');
-            		var priceChange = JSON.stringify(stockData.change).replace(/['"]+/g, '');
-            		var percentChange = JSON.stringify(stockData.changePercent).replace(/['"]+/g, '') * 100;
-            		var symbol = JSON.stringify(stockData.symbol).replace(/['"]+/g, '');
-					$('#'+ symbol + '-liked').append('<b>$' + price + '</b><p id="' + symbol + '-change"></p>');
-					if (priceChange > 0) {
-						$("#" + symbol + "-change").addClass('tealColor').html('($' + priceChange + ' / ' + percentChange + '%)');
-					} else if (priceChange < 0) {
-						$("#" + symbol + "-change").addClass('redColor').html('(-$' + priceChange.slice(1) + ' / ' + percentChange + '%)');;
-					}
-					else{
-						$("#" + symbol + "-change").html('($' + priceChange + ' / ' + percentChange + '%)');;	
-					}
-	            });
-            }
-        });
+					var symbol;
+					for(var i in data){
+						symbol = JSON.stringify(data[i].symbol).replace(/['"]+/g, '').toUpperCase();
+						$("#liked-list").append('<li id="' + symbol + '-liked" class="DocumentItem"><h3>' + symbol + '</h3></li>');
+						var url = "https://api.iextrading.com/1.0/stock/" + symbol + "/quote";
+						$.get(url, function(stockData){
+							//var name = JSON.stringify(stockData.companyName).replace(/['"]+/g, '');
+							var price = JSON.stringify(stockData.latestPrice).replace(/['"]+/g, '');
+							var priceChange = JSON.stringify(stockData.change).replace(/['"]+/g, '');
+							var percentChange = JSON.stringify(stockData.changePercent).replace(/['"]+/g, '') * 100;
+							var symbol = JSON.stringify(stockData.symbol).replace(/['"]+/g, '');
+							$('#'+ symbol + '-liked').append('<b>$' + price + '</b><p id="' + symbol + '-change"></p>');
+							if (priceChange > 0) {
+								$("#" + symbol + "-change").addClass('greenColor').html('($' + priceChange + ' / ' + percentChange + '%)');
+							} else if (priceChange < 0) {
+								$("#" + symbol + "-change").addClass('redColor').html('(-$' + priceChange.slice(1) + ' / ' + percentChange + '%)');;
+							}
+							else{
+								$("#" + symbol + "-change").html('($' + priceChange + ' / ' + percentChange + '%)');;	
+							}
+				});
+			}
+		});
 	}
 
 	refreshList();
@@ -40,7 +40,7 @@ $(document).ready(function() {
 	});
 
 	$("#refresh").click(function(){
-          refreshList();
+					refreshList();
 	});
 	Chart.defaults.global.responsive = true;
 	Chart.defaults.global.legend.display = false;
@@ -68,7 +68,14 @@ $(document).ready(function() {
 				success: function(res) {
 					$("#companyName").html(res.companyName+ ' ('+ res.symbol+ ')');
 					$("#latestPrice").html('$' +res.latestPrice);
-					$("#priceChange").html('('+res.change.toString().slice(0,1) + '$' + res.change.toString().slice(1));
+					var plusOrMinus = (res.change.toString().slice(0,1) === '-') ? '-' : '+';
+					
+					if (plusOrMinus === "+") {
+						$("#priceChange").html('($' +res.change.toString());
+					} else {
+						$("#priceChange").html('('+res.change.toString().slice(0,1) + '$' + res.change.toString().slice(1));	
+					}
+					
 
 					var changePercent = (Math.abs((res.changePercent * 100).toFixed(2)) == 0) ? 
 															res.changePercent * 100 :  
@@ -76,9 +83,11 @@ $(document).ready(function() {
 
 					$("#priceChange").append(' / ' + changePercent + '%)');
 					if (res.change > 0) {
-						$("#priceChange").addClass('tealColor');
-					} else {
+						$("#priceChange").addClass('greenColor');
+					} else if (res.change < 0) {
 						$("#priceChange").addClass('redColor');
+					} else {
+						
 					}
 					$("#today").html('Today');
 				}
