@@ -10,15 +10,15 @@ $(document).ready(function() {
           	var symbol;
             for(var i in data){
             	symbol = JSON.stringify(data[i].symbol).replace(/['"]+/g, '').toUpperCase();
-            	$("#liked-list").append('<li id="' + symbol + '-liked" class="DocumentItem"><h3>' + symbol + '</h3></li>');
+            	$("#liked-list").append('<li id="' + symbol + '-liked" class="DocumentItem"><h3 class="list-symbol-symbol">' + symbol + '</h3></li>');
             	var url = "https://api.iextrading.com/1.0/stock/" + symbol + "/quote";
             	$.get(url, function(stockData){
-            		//var name = JSON.stringify(stockData.companyName).replace(/['"]+/g, '');
+            		var name = JSON.stringify(stockData.companyName).replace(/['"]+/g, '');
             		var price = JSON.stringify(stockData.latestPrice).replace(/['"]+/g, '');
             		var priceChange = JSON.stringify(stockData.change).replace(/['"]+/g, '');
             		var percentChange = JSON.stringify(stockData.changePercent).replace(/['"]+/g, '') * 100;
             		var symbol = JSON.stringify(stockData.symbol).replace(/['"]+/g, '');
-					$('#'+ symbol + '-liked').append('<b>$' + price + '</b><p id="' + symbol + '-change"></p>');
+					$('#'+ symbol + '-liked').append('<div class="list-symbol-info"><i class="list-symbol-name">' + name + '</i></br><b>$' + price + '</b><p id="' + symbol + '-change"></p></div>');
 					if (priceChange > 0) {
 						$("#" + symbol + "-change").addClass('tealColor').html('($' + priceChange + ' / ' + percentChange + '%)');
 					} else if (priceChange < 0) {

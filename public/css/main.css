@@ -47,8 +47,6 @@
 {
 	background-color: #501e58;
 	overflow-x:scroll;
-	overflow-y:hidden;
-	height: 25vh;
 	padding: 15px;
 	overflow-x: auto;
 	white-space: nowrap;
@@ -59,9 +57,20 @@
 {
 	background-color: white;
 	padding:10px;
-	height:15vh;
 	margin:10px;
-	width:200px;
+	min-width:200px;
+}
+
+.list-symbol-symbol {
+	margin:0px;
+	padding:10px;
+}
+.list-symbol-name {
+	margin:0px;
+}
+.list-symbol-info {
+	padding-left:10px;
+	padding-right:10px;
 }
 
 .list-inline {
