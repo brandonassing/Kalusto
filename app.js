@@ -7,10 +7,16 @@ let bodyParser = require('body-parser');
 var cfenv = require('cfenv');
 
 
+
 app.use(bodyParser.urlencoded({
 	extended: false
 }));
 app.use(bodyParser.json());
+
+//mlab data
+var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://main:main@ds125556.mlab.com:25556/kalusto');
 
 app.use(express.static(__dirname + '/public'));
 
