@@ -7,7 +7,7 @@ var timer1;
 var labelX = [],
     labelY = [];
 
-var company = 'TSLA';
+var company = 'CHK';
 
 $(document).ready(function() {
 
@@ -90,7 +90,7 @@ function checkForSwipe() {
         wait();
     } else if ($box.offset().top - $box_top < -50) {
         console.log('Swiped Top!');
-        SwipeTop();
+        SwipeUp();
         clearInterval(timer1);
         wait();
     }
