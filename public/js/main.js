@@ -1,3 +1,5 @@
+jQuery.support.cors = true;
+
 var $box = $("#placeholder-box");
 var $box_left = $box.offset().left,
     $box_top = $box.offset().top;
