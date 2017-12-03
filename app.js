@@ -56,8 +56,7 @@ db_router.route('/symbols')
         var sym = new Symbol();
         console.log("post");
         // window.alert("hit");
-        sym.content = req.body.content;
-        sym.key = req.body.key;
+        sym.symbol = req.body.symbol;
 
         sym.save(function(err) {
             if (err)
