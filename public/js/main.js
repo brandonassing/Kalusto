@@ -3,7 +3,8 @@ var $box_left = $box.offset().left,
 		$box_top = $box.offset().top;
 var timer1;
 var labelX = [],
-		labelY = [];
+    labelY = [];
+
 
 var companyList = ['TSLA','BAC', 'GE', 'MU', 'F' ,'AMD', 'BRCD', 'AAPL', 'T' , 'WFC', 'BABA','CHK','SQ','TEVA',
  'MSFT','VZ','INTC','JPM','FHN','CMCSA','KO','DIS','SHOP'];
@@ -82,6 +83,24 @@ $(document).ready(function() {
 });
 
 function checkForSwipe() {
+<<<<<<< HEAD
+    if ($box.offset().left + $box.width() > $(window).width() - 20) {
+        console.log('Swiped Right!');
+        SwipeRight();
+        clearInterval(timer1);
+        wait();
+    } else if ($box.offset().left < 10) {
+        console.log('Swiped Left!');
+        SwipeLeft();
+        clearInterval(timer1);
+        wait();
+    } else if ($box.offset().top - $box_top < -50) {
+        console.log('Swiped Top!');
+        SwipeUp();
+        clearInterval(timer1);
+        wait();
+    }
+=======
 		if ($box.offset().left + $box.width() > $(window).width() - 20) {
 				console.log('Swiped Right!');
 				SwipeRight();
@@ -98,6 +117,7 @@ function checkForSwipe() {
 				clearInterval(timer1);
 				wait();
 		}
+>>>>>>> master
 }
 
 function refreshView() {
