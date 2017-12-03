@@ -28,32 +28,44 @@ $(document).ready(function() {
         }
     });
 
+    //gets user symbols and appends them to symbol "liked" list
     function refreshList() {
 
-        $.get("/api/symbols", function(data) {
+        $.ajax({
+            url: "/api/symbols",
+            success: function(data) {
+                $(".DocumentItem").remove();
 
-            $(".DocumentItem").remove();
-            var symbol;
-            for (var i in data) {
-                symbol = JSON.stringify(data[i].symbol).replace(/['"]+/g, '').toUpperCase();
-                $("#liked-list").append('<li id="' + symbol + '-liked" class="DocumentItem"><h3 class="list-symbol-symbol">' + symbol + '</h3></li>');
-                var url = "https://api.iextrading.com/1.0/stock/" + symbol + "/quote";
-                $.get(url, function(stockData) {
-                    var name = JSON.stringify(stockData.companyName).replace(/['"]+/g, '');
-                    var price = JSON.stringify(stockData.latestPrice).replace(/['"]+/g, '');
-                    var priceChange = JSON.stringify(stockData.change).replace(/['"]+/g, '');
-                    var percentChange = JSON.stringify(stockData.changePercent).replace(/['"]+/g, '') * 100;
-                    var symbol = JSON.stringify(stockData.symbol).replace(/['"]+/g, '');
+                //loops through "liked" symbols and creates cards for each stock
+                for (var i in data) {
+                    var symbol = (data[i].symbol).toString().toUpperCase();
+                    $("#liked-list").append(`<li id= "${symbol}-liked" class = "DocumentItem"></li>`);
 
-                    $('#' + symbol + '-liked').append('<div class="list-symbol-info"><i class="list-symbol-name">' + name + '</i></br><b>$' + price + '</b><p id="' + symbol + '-change"></p></div>');
-                    if (priceChange > 0) {
-                        $("#" + symbol + "-change").addClass('greenColor').html('($' + priceChange + ' / ' + percentChange + '%)');
-                    } else if (priceChange < 0) {
-                        $("#" + symbol + "-change").addClass('redColor').html('(-$' + priceChange.slice(1) + ' / ' + percentChange + '%)');;
-                    } else {
-                        $("#" + symbol + "-change").html('($' + priceChange + ' / ' + percentChange + '%)');;
-                    }
-                });
+                    //get stock info to fill card
+                    $.ajax({
+                        url: `https://api.iextrading.com/1.0/stock/${symbol}/quote`,
+                        success: function(stockData) {
+                            var name = (stockData.companyName).toString();
+                            var price = (stockData.latestPrice).toString();
+                            var priceChange = (stockData.change).toString();
+                            var percentChange = ((stockData.changePercent).toString() * 100).toFixed(2);
+                            var symbol = (stockData.symbol).toString();
+
+                            //create stock card info
+                            $(`#${symbol}-liked`).append(`<h3 id = "${symbol}" class = "list-symbol-symbol">${symbol}</h3>`)
+                                .append(`<div class="list-symbol-info"><i class="list-symbol-name">${name}</i></br><b>$${price}</b><p id="${symbol}-change"></p></div>`);
+                            
+                            //alter price changes based on pos or neg
+                            if (priceChange > 0) {
+                                $("#" + symbol + "-change").addClass('greenColor').html(`($${priceChange} / ${percentChange}%)`);
+                            } else if (priceChange < 0) {
+                                $("#" + symbol + "-change").addClass('redColor').html(`(-$${priceChange.slice(1)} / ${percentChange}%)`);
+                            } else {
+                                $("#" + symbol + "-change").html(`($${priceChange} / ${percentChange}%)`);;
+                            }
+                        }
+                    });
+                }
             }
         });
     }
@@ -143,6 +155,7 @@ function refreshView() {
                         res.changePercent * 100 :
                         (res.changePercent * 100).toFixed(2);
 
+                    //TODO - stocks with pos change not always turning green; sometimes show as red
                     $("#priceChange").append(' / ' + changePercent + '%)');
                     if (res.change > 0) {
                         $("#priceChange").addClass('greenColor');

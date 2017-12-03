@@ -80,7 +80,7 @@
     background-color: white;
     padding: 10px;
     margin: 10px;
-    min-width: 200px;
+    width: 200px;
 }
 
 .list-symbol-symbol {
@@ -95,6 +95,8 @@
 .list-symbol-info {
     padding-left: 10px;
     padding-right: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .list-inline {
