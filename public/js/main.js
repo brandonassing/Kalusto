@@ -1,5 +1,3 @@
-jQuery.support.Cors = true;
-
 var $box = $("#placeholder-box");
 var $box_left = $box.offset().left,
 		$box_top = $box.offset().top;
@@ -10,6 +8,7 @@ var labelX = [],
 var companyList = ['TSLA','BAC', 'GE', 'MU', 'F' ,'AMD', 'BRCD', 'AAPL', 'T' , 'WFC', 'BABA','CHK','SQ','TEVA',
  'MSFT','VZ','INTC','JPM','FHN','CMCSA','KO','DIS','SHOP'];
 var company;
+var myChart;
 $(document).ready(function() {
 
 	document.addEventListener('keydown', function(event) {
@@ -58,17 +57,6 @@ $(document).ready(function() {
 				});
 	}
 
-	function addStockToDB(stock){
-		$.ajax({
-							'url': '/api/symbols',
-							'type': 'POST',
-							'data': {
-									'symbol': stock
-							},
-							success: function (data) {
-						}
-					});
-	}
 	refreshList();
 	$("#placeholder-box").draggable({
 		revert: false,
@@ -156,9 +144,13 @@ function refreshView() {
 									$("#today").html('Today');
 							}
 					});
-
+					if (myChart) {
+						myChart.destroy();
+						$("#stockChart").remove();
+						$box.append("<canvas id='stockChart'></canvas>");
+					}
 					var ctx = document.getElementById("stockChart").getContext('2d');
-					var myChart = new Chart(ctx, {
+					myChart = new Chart(ctx, {
 							type: 'line',
 							data: {
 									labels: labelX,
@@ -200,9 +192,9 @@ function refreshView() {
 }
 
 function SwipeLeft() {
-		$.get("https://kalusto-py.mybluemix.net/api/symbol", function(res) {
-				console.log(res);
-		});
+		// $.get("https://kalusto-py.mybluemix.net/api/symbol", function(res) {
+		// 		console.log(res);
+		// });
 		refreshView();
 		// document.getElementById("formLeft").submit();
 
@@ -214,13 +206,27 @@ function SwipeUp() {
 
 function SwipeRight() {
 		//	 document.getElementById("formRight").submit();
+		addStockToDB(company);
+		refreshView();
+}
+
+function addStockToDB(stock){
+	$.ajax({
+			'url': '/api/symbols',
+			'type': 'POST',
+			'data': {
+					'symbol': stock
+			},
+			success: function (data) {
+		}
+	});
 }
 
 function wait() {
-		// Recheck for swipe after waiting for 2 seconds
-		window.setTimeout(function() {
-				timer1 = setInterval(function() {
-						checkForSwipe()
-				}, 50);
-		}, 2000);
+	// Recheck for swipe after waiting for 2 seconds
+	window.setTimeout(function() {
+			timer1 = setInterval(function() {
+					checkForSwipe()
+			}, 50);
+	}, 2000);
 }
