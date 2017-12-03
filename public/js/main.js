@@ -25,7 +25,9 @@ $(document).ready(function() {
     });
 
 	function refreshList(){
+
 		$.get("/api/symbols", function(data){
+			$( ".DocumentItem" ).remove();
           	var symbol;
             for(var i in data){
             	symbol = JSON.stringify(data[i].symbol).replace(/['"]+/g, '').toUpperCase();
@@ -51,6 +53,17 @@ $(document).ready(function() {
         });
 	}
 
+	function addStockToDB(stock){
+		$.ajax({
+              'url': '/api/symbols',
+              'type': 'POST',
+              'data': {
+                  'symbol': stock
+              },
+              success: function (data) {
+	          }
+          });
+	}
 	refreshList();
 	$("#placeholder-box").draggable({
 		revert: false,
