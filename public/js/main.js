@@ -180,6 +180,7 @@ function SwipeLeft() {
 
 function SwipeUp() {
     document.getElementById("transactionForm").submit();
+    //TODO - add a cancel option that takes you back to the same stock view
 }
 
 function SwipeRight() {
