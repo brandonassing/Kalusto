@@ -93,7 +93,7 @@ function checkForSwipe() {
 				SwipeLeft();
 				clearInterval(timer1);
 				wait();
-		} else if ($box.offset().top - $box_top < -50) {
+		} else if ($box.offset().top - $box_top < -100) {
 				console.log('Swiped Top!');
 				SwipeTop();
 				clearInterval(timer1);
@@ -102,6 +102,7 @@ function checkForSwipe() {
 }
 
 function refreshView() {
+	labelX = [], labelY = [];
 	console.log(companyList.length);
 	company = companyList[Math.floor(Math.random() * companyList.length)];
 	console.log(company);
@@ -116,9 +117,12 @@ function refreshView() {
 					for (var i = 0; i < res.length; i++) {
 							var date = res[i].date,
 									closePrice = res[i].close;
+
 							labelX.push(date);
 							labelY.push(closePrice);
 					}
+					makeChart();
+
 					$.get({
 							url: `https://api.iextrading.com/1.0/stock/${company}/quote`,
 							success: function(res) {
@@ -143,49 +147,6 @@ function refreshView() {
 											$("#priceChange").addClass('redColor');
 									}
 									$("#today").html('Today');
-							}
-					});
-					if (myChart) {
-						myChart.destroy();
-						$("#stockChart").remove();
-						$box.append("<canvas id='stockChart'></canvas>");
-					}
-					var ctx = document.getElementById("stockChart").getContext('2d');
-					myChart = new Chart(ctx, {
-							type: 'line',
-							data: {
-									labels: labelX,
-									datasets: [{
-											data: labelY,
-											fill: false,
-											borderColor: '#9320a2',
-											pointBackgroundColor: 'white',
-									}]
-							},
-							options: {
-									scales: {
-											xAxes: [{
-													scaleLabel: {
-															display: true,
-															labelString: 'Date',
-													},
-													ticks: {
-															fontSize: 8,
-													}
-											}],
-											yAxes: [{
-													ticks: {
-															callback: function(value, index, values) {
-																	return '$' + value;
-															},
-															fontSize: 8,
-													},
-													scaleLabel: {
-															display: true,
-															labelString: 'Price',
-													}
-											}]
-									}
 							}
 					});
 			},
@@ -223,6 +184,46 @@ function addStockToDB(stock){
 	});
 }
 
+function makeChart() {
+	var ctx = document.getElementById("stockChart").getContext('2d');
+	myChart = new Chart(ctx, {
+			type: 'line',
+			data: {
+					labels: labelX,
+					datasets: [{
+							data: labelY,
+							fill: false,
+							borderColor: '#9320a2',
+							pointBackgroundColor: 'white',
+					}]
+			},
+			options: {
+					scales: {
+							xAxes: [{
+									scaleLabel: {
+											display: true,
+											labelString: 'Date',
+									},
+									ticks: {
+											fontSize: 8,
+									}
+							}],
+							yAxes: [{
+									ticks: {
+											callback: function(value, index, values) {
+													return '$' + value;
+											},
+											fontSize: 8,
+									},
+									scaleLabel: {
+											display: true,
+											labelString: 'Price',
+									}
+							}]
+					}
+			}
+	});
+}
 function wait() {
 	// Recheck for swipe after waiting for 2 seconds
 	window.setTimeout(function() {
