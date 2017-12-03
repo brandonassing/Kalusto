@@ -80,6 +80,29 @@ db_router.route('/symbols')
 
     });
 
+db_router.route('/symbols/:symbol_id')
+
+// get the tweet with that id (accessed at GET http://localhost:8080/api/tweets/:tweet_id)
+.get(function(req, res) {
+        Symbol.findById(req.params.symbol_id, function(err, sym) {
+            if (err)
+                res.send(err);
+            res.json(sym);
+        });
+    })
+    
+    .delete(function(req, res) {
+        Symbol.remove({
+            _id: req.params.symbol_id
+        }, function(err, sym) {
+            if (err)
+                res.send(err);
+            res.json({
+                message: 'Sucessfully deleted'
+            });
+        });
+    });
+
 //////////////////////////SYMBOL DB CALLS////////////////////////////////////////////////
 
 var appEnv = cfenv.getAppEnv();
