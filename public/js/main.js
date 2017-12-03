@@ -4,7 +4,8 @@ var $box_left = $box.offset().left,
 var timer1;
 var labelX = [],
     labelY = [];
-var company = 'AAPL';
+
+var company = 'TSLA';
 
 $(document).ready(function() {
 
@@ -12,6 +13,7 @@ $(document).ready(function() {
         if (event.keyCode == 37) {
             //left arrow
             SwipeLeft();
+
 
         } else if (event.keyCode == 38) {
             //up arrow
@@ -22,43 +24,52 @@ $(document).ready(function() {
         }
     });
 
-    function refreshList() {
-        $.get("/api/symbols", function(data) {
-            var symbol;
-            for (var i in data) {
-                symbol = JSON.stringify(data[i].symbol).replace(/['"]+/g, '').toUpperCase();
-                $("#liked-list").append('<li id="' + symbol + '-liked" class="DocumentItem"><h3>' + symbol + '</h3></li>');
-                var url = "https://api.iextrading.com/1.0/stock/" + symbol + "/quote";
-                $.get(url, function(stockData) {
-                    var name = JSON.stringify(stockData.companyName).replace(/['"]+/g, '');
-                    var price = JSON.stringify(stockData.latestPrice).replace(/['"]+/g, '');
-                    var volume = JSON.stringify(stockData.latestVolume).replace(/['"]+/g, '');
-                    var symbol = JSON.stringify(stockData.symbol).replace(/['"]+/g, '');
-                    $('#' + symbol + '-liked').append('<p>' + name + '</p><h4>Latest Price: ' + price + '</h4><h4>Latest Volume: ' + volume + '</h4>');
-                });
+	function refreshList(){
+		$.get("/api/symbols", function(data){
+          	var symbol;
+            for(var i in data){
+            	symbol = JSON.stringify(data[i].symbol).replace(/['"]+/g, '').toUpperCase();
+            	$("#liked-list").append('<li id="' + symbol + '-liked" class="DocumentItem"><h3 class="list-symbol-symbol">' + symbol + '</h3></li>');
+            	var url = "https://api.iextrading.com/1.0/stock/" + symbol + "/quote";
+            	$.get(url, function(stockData){
+            		var name = JSON.stringify(stockData.companyName).replace(/['"]+/g, '');
+            		var price = JSON.stringify(stockData.latestPrice).replace(/['"]+/g, '');
+            		var priceChange = JSON.stringify(stockData.change).replace(/['"]+/g, '');
+            		var percentChange = JSON.stringify(stockData.changePercent).replace(/['"]+/g, '') * 100;
+            		var symbol = JSON.stringify(stockData.symbol).replace(/['"]+/g, '');
+					$('#'+ symbol + '-liked').append('<div class="list-symbol-info"><i class="list-symbol-name">' + name + '</i></br><b>$' + price + '</b><p id="' + symbol + '-change"></p></div>');
+					if (priceChange > 0) {
+						$("#" + symbol + "-change").addClass('greenColor').html('($' + priceChange + ' / ' + percentChange + '%)');
+					} else if (priceChange < 0) {
+						$("#" + symbol + "-change").addClass('redColor').html('(-$' + priceChange.slice(1) + ' / ' + percentChange + '%)');;
+					}
+					else{
+						$("#" + symbol + "-change").html('($' + priceChange + ' / ' + percentChange + '%)');;	
+					}
+	            });
             }
         });
-    }
+	}
 
-    refreshList();
-    $("#placeholder-box").draggable({
-        revert: false,
-    });
+	refreshList();
+	$("#placeholder-box").draggable({
+		revert: false,
+	});
 
-    $("#refresh").click(function() {
-        refreshList();
-    });
-    Chart.defaults.global.responsive = true;
-    Chart.defaults.global.legend.display = false;
+	$("#refresh").click(function(){
+		refreshList();
+	});
+	Chart.defaults.global.responsive = true;
+	Chart.defaults.global.legend.display = false;
 
-    $box.draggable({
-        revert: true,
-        containment: [-$(window).width() / 2 + $box.width() / 2 + 20, -50, $(window).width() / 2 - $box.width() / 2, 100],
-    });
+	$box.draggable({
+		revert: true,
+		containment: [-$(window).width()/2 + $box.width()/2 + 20, -50, $(window).width()/2 - $box.width()/2 ,100],
+	});
 
-    timer1 = setInterval(function() {
-        checkForSwipe()
-    }, 50);
+	timer1 = setInterval(function() {
+		checkForSwipe()
+	}, 50);
 
 
     refreshView();
