@@ -95,7 +95,7 @@ function checkForSwipe() {
 				wait();
 		} else if ($box.offset().top - $box_top < -100) {
 				console.log('Swiped Top!');
-				SwipeTop();
+				SwipeUp();
 				clearInterval(timer1);
 				wait();
 		}
