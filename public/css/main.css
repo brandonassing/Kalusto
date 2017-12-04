@@ -78,29 +78,30 @@
 
 .DocumentItem {
     background-color: white;
-    padding: 10px;
+    padding:10px;
+
     margin: 10px;
     width: 200px;
 }
-
 .list-symbol-symbol {
     margin: 0px;
-    padding: 10px;
+    font-size: 3vmin;
 }
 
 .list-symbol-name {
     margin: 0px;
 }
-
+.list-symbol-change{
+    margin:0px;
+}
 .list-symbol-info {
-    padding-left: 10px;
-    padding-right: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .list-inline {
     white-space: nowrap;
+    margin:0px;
 }
 
 .footer {
