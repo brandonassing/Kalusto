@@ -54,7 +54,7 @@ $(document).ready(function() {
                             //create stock card info
                             $(`#${symbol}-liked`).append(`<h3 id = "${symbol}" class = "list-symbol-symbol">${symbol}</h3>`)
                                 .append(`<div class="list-symbol-info"><i class="list-symbol-name">${name}</i></br><b>$${price}</b><p id="${symbol}-change" class="list-symbol-change"></p></div>`);
-                            
+
                             //alter price changes based on pos or neg
                             if (priceChange > 0) {
                                 $("#" + symbol + "-change").addClass('greenColor').html(`($${priceChange} / ${percentChange}%)`);
